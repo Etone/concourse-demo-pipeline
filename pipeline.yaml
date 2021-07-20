@@ -12,5 +12,7 @@ jobs:
 - name: print 
   plan:
   - get: code
+  - set_pipeline: self
+    file: code/pipeline.yaml
   - task: hello-world
     file: code/tasks/hello-world.yaml
