@@ -16,3 +16,4 @@ jobs:
     file: code/tasks/hello-world.yaml
     params:
       message: ((message))
+      something: ((something))

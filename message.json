@@ -1,3 +1,5 @@
-{
-    "message": "Hello from instanced var"
-}
+[
+    {
+        "message": "Hello"
+    }
+]

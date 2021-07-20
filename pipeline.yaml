@@ -19,3 +19,7 @@ jobs:
     file: code/hello-pipeline.yaml
     instance_vars:
       message: ((.:config.message))
+      something: ((.:something))
+    across:
+    - var: something
+      values: ["thing", "other thing"]
