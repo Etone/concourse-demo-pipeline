@@ -15,6 +15,10 @@ jobs:
     file: code/pipeline.yaml
 - name: configure-instances
   plan:
+  - get: code
+    trigger: true
+    passed:
+    - configure-self
   - load_var: config
     file: code/message.json
   - set_pipeline: hello-world
