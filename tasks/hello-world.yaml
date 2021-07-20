@@ -4,4 +4,4 @@ image_resource:
   source: { repository: busybox }
 run:
   path: echo
-  args: ["Hello world!"]
+  args: ["$message"]
