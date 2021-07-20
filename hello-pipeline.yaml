@@ -1,0 +1,7 @@
+jobs:
+- name: print
+  plan:
+  - task: hello-world
+    file: code/tasks/hello-world.yaml
+    params:
+      message: ((.:config.message))

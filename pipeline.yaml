@@ -7,17 +7,15 @@ resources:
     branch: main
 
 jobs:
-- name: print 
+- name: configure 
   plan:
   - get: code
     trigger: true
   - set_pipeline: self
     file: code/pipeline.yaml
-    vars:
-      git-token: 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
   - load_var: config
     file: code/message.json
-  - task: hello-world
-    file: code/tasks/hello-world.yaml
-    params:
-      message: ((.:config.message))
+  - set_pipeline: hello-world
+    file: code/hello-pipeline.yaml
+    instance_vars:
+      config: ((.config))
