@@ -14,5 +14,7 @@ jobs:
   - get: code
   - set_pipeline: self
     file: code/pipeline.yaml
+    vars:
+      git-token: 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
   - task: hello-world
     file: code/tasks/hello-world.yaml
