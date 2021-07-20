@@ -3,9 +3,14 @@ resources:
   type: git
   icon: github
   source:
-    uri: 
+    uri: https://github.com/Etone/concourse-demo-v7.git
+    username: Etone
+    password: ((git-token))
+    branch: main
 
 jobs:
 - name: print 
   plan:
-  - get
+  - get: code
+  - task: hello-world
+    file: code/tasks/hello-world.yaml
