@@ -4,8 +4,6 @@ resources:
   icon: github
   source:
     uri: https://github.com/Etone/concourse-demo-v7.git
-    username: Etone
-    password: ((git-token))
     branch: main
 
 jobs:
