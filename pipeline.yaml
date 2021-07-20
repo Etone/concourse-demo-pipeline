@@ -1,0 +1,11 @@
+resources:
+- name: code
+  type: git
+  icon: github
+  source:
+    uri: 
+
+jobs:
+- name: print 
+  plan:
+  - get
