@@ -22,4 +22,4 @@ jobs:
       something: ((.:something))
     across:
     - var: something
-      values: ["thing", "other thing"]
+      values: ((.:config.across))
