@@ -15,4 +15,4 @@ jobs:
   - task: hello-world
     file: code/tasks/hello-world.yaml
     params:
-      message: ((.:config.message))
+      message: ((message))
