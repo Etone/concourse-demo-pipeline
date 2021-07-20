@@ -18,4 +18,4 @@ jobs:
   - set_pipeline: hello-world
     file: code/hello-pipeline.yaml
     instance_vars:
-      config: ((.config))
+      config: ((.:config))
