@@ -15,5 +15,6 @@ run:
   path: mvn
   args:
   - "package"
+  - "jib:buildTar"
   - "-f"
   - "pom.xml" 
