@@ -3,12 +3,13 @@ platform: linux
 inputs:
 - name: code
 
-outputs:
-- name: code
+caches:
+- path: $HOME/.m2/repository
 
 run:
   path: mvn
   args:
   - "clean"
   - "package"
-  - "-f code/pom.xml" 
+  - "-f"
+  - "code/pom.xml" 
