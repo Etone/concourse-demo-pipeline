@@ -13,7 +13,6 @@ caches:
 run:
   path: mvn
   args:
-  - "clean"
   - "package"
   - "spring-boot:build-image"
   - "-f"
