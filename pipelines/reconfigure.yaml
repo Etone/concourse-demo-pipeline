@@ -11,11 +11,15 @@ resources:
 jobs:
 - name: configure-self
   plan:
+  - get: ci
+    trigger: true
   - set_pipeline: self
     file: ci/pipelines/reconfigure.yaml
 - name: configure-build
   plan:
   - get: ci
     trigger: true
+    passed:
+    - configure-self
   - set_pipeline: build
     file: ci/pipelines/build.yaml
