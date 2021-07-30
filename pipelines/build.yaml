@@ -21,6 +21,13 @@ resources:
   check_every: 168h
   source:
     repository: maven
+
+- name: busybox
+  icon: docker
+  type: registry-image
+  check_every: 168h
+  source:
+    repository: busybox
     
 
 
@@ -41,9 +48,13 @@ jobs:
       passed:
       - generate-metadata
     - get: maven
-  - task: build
+    - get: busybox
+  - task: build-jar
     file: ci/tasks/build-java-maven.yaml
     image: maven
+  - task: build-container
+    file: ci/tasks/build-container.yaml
+    image: busybox
 - name: deploy
   plan:
   - get: ci

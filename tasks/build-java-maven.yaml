@@ -14,6 +14,5 @@ run:
   path: mvn
   args:
   - "package"
-  - "spring-boot:build-image"
   - "-f"
   - "code/pom.xml" 
