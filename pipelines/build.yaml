@@ -30,7 +30,6 @@ jobs:
   - get: code
     trigger: true
   - get: ci
-  - get: maven
 - name: build-and-test
   plan:
   - in_parallel:  
@@ -41,6 +40,7 @@ jobs:
     - get: ci
       passed:
       - generate-metadata
+    - get: maven
   - task: build
     file: ci/tasks/build-java-maven.yaml
     image: maven
