@@ -1,6 +1,14 @@
 platform: linux
 
+inputs:
+- name: code
+
+outputs:
+- name: code
+
 run:
-  path: echo
+  path: mvn
   args:
-  - "hello world" 
+  - "clean"
+  - "package"
+  - "-f code/pom.xml" 

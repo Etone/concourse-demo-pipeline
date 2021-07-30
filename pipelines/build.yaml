@@ -19,8 +19,7 @@ resources:
   icon: docker
   type: registry-image
   source:
-    repository: busybox
-    tag: 1.33
+    repository: maven
     
 
 
