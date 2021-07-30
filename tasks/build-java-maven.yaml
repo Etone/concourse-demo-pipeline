@@ -3,6 +3,10 @@ platform: linux
 inputs:
 - name: code
 
+outputs:
+- name: build-artifacts
+  path: code/target
+
 caches:
 - path: $HOME/.m2/repository
 
@@ -11,5 +15,6 @@ run:
   args:
   - "clean"
   - "package"
+  - "spring-boot:build-image"
   - "-f"
   - "code/pom.xml" 
