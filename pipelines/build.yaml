@@ -34,7 +34,7 @@ jobs:
       passed:
       - generate-metadata
   - task: build
-    file: ci/tasks/build.yaml
+    file: ci/tasks/build-java-maven.yaml
 - name: deploy
   plan:
   - get: ci
