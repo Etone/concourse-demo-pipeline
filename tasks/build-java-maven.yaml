@@ -11,8 +11,9 @@ caches:
 - path: $HOME/.m2/repository
 
 run:
+  dir: code
   path: mvn
   args:
   - "package"
   - "-f"
-  - "code/pom.xml" 
+  - "pom.xml" 
