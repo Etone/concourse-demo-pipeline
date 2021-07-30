@@ -16,6 +16,7 @@ resources:
     - tasks
 
 - name: maven
+  icon: docker
   type: registry-image
   source:
     repository: busybox
@@ -29,6 +30,7 @@ jobs:
   - get: code
     trigger: true
   - get: ci
+  - get: maven
 - name: build-and-test
   plan:
   - in_parallel:  
