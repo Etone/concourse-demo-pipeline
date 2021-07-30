@@ -1,0 +1,21 @@
+resources:
+- name: ci
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/Etone/concourse-demo-pipeline.git
+    branch: main
+    paths:
+    - pipelines
+
+jobs:
+- name: configure-self
+  plan:
+  - set_pipeline: self
+    file: ci/pipelines/reconfigure.yaml
+- name: configure-build
+  plan:
+  - get: ci
+    trigger: true
+  - set_pipeline: build
+    file: ci/pipelines/build.yaml

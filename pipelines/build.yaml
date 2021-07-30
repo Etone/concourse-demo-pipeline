@@ -1,0 +1,42 @@
+resources:
+- name: code
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/Etone/concourse-demo-code.git
+    branch: main
+
+- name: ci
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/Etone/concourse-demo-pipeline.git
+    branch: main
+    paths:
+    - tasks
+    
+
+
+jobs:
+- name: generate-metadata
+  plan:
+  - get: code
+    trigger: true
+  - get: ci
+- name: build-and-test
+  plan:
+  - in_parallel:  
+    - get: code
+      passed:
+      - generate-metadata
+      trigger: true
+    - get: ci
+      passed:
+      - generate-metadata
+  - task: build
+    file: ci/tasks/build.yaml
+- name: deploy
+  plan:
+  - get: ci
+    passed:
+    - generate-metadata
