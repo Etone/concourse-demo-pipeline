@@ -26,9 +26,9 @@ jobs:
     instance_vars:
       message: ((.:config.message))
       something: ((.:something))
-      someone: ((.:someone))
+      apps: ((.:app))
     across:
     - var: something
       values: [1, 2, 3, 4, 5]
-    - var: someone
-      values: [kbv-admin, kbv-registry]
+    - var: app
+      values: [concourse, kubernetes]
