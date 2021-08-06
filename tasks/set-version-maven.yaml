@@ -1,0 +1,18 @@
+platform: linux
+
+inputs:
+- name: code
+
+outputs:
+- name: code
+caches:
+- path: $HOME/.m2/repository
+
+run:
+  dir: code
+  path: mvn
+  args:
+  - "versions:set"
+  - "-DnewVersion=((version))"
+  - "-f"
+  - "pom.xml"

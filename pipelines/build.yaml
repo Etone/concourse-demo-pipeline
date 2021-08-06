@@ -15,6 +15,17 @@ resources:
     paths:
     - tasks
 
+- name: version
+  type: semver
+  icon: package-up
+  source:
+    driver: git
+    uri: https://github.com/Etone/concourse-demo-code.git
+    branch: version
+    file: version
+    initial_version: 1.0.0
+    password: ((git-package-token))
+
 - name: maven
   icon: docker
   type: registry-image
@@ -30,7 +41,7 @@ resources:
     repository: busybox
     
 - name: app-container
-  icon: docker
+  icon: package-variant-closed
   type: registry-image
   source:
     repository: ghcr.io/etone/spring-boot-hello-world
@@ -39,22 +50,24 @@ resources:
 
 
 jobs:
-- name: generate-metadata
-  plan:
-  - get: code
-    trigger: true
-  - get: ci
 - name: build-and-test
   plan:
   - in_parallel:  
     - get: code
-      passed:
-      - generate-metadata
       trigger: true
     - get: ci
-      passed:
-      - generate-metadata
     - get: maven
+    - get: version
+      params:
+        bump: patch
+  - load_var: version
+    file: version/version
+    format: raw
+  - task: set-version
+    file: ci/tasks/set-version-maven.yaml
+    vars:
+      version: ((.:version))
+    image: maven
   - task: build-jar-and-container
     file: ci/tasks/build-java-maven.yaml
     image: maven
@@ -63,13 +76,17 @@ jobs:
     - build-artifacts
     params:
       image: build-artifacts/jib-image.tar
-      version: v1
+      version: ((.:version))
+  - put: version
+    params:
+      bump: patch
+      
 - name: deploy
   plan:
   - in_parallel:  
     - get: ci
       passed:
-      - generate-metadata
+      - build-and-test
     - get: app-container
       passed:
       - build-and-test
