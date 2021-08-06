@@ -41,7 +41,7 @@ jobs:
       passed:
       - generate-metadata
     - get: maven
-  - task: build-jar
+  - task: build-jar-and-container
     file: ci/tasks/build-java-maven.yaml
     image: maven
 - name: deploy
