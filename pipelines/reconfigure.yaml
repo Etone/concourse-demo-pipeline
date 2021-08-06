@@ -1,4 +1,15 @@
+resource_types:
+- name: pull-request
+  type: registry-image
+  source:
+    repository: aoldershaw/github-pr-resource
+
 resources:
+- name: pull-requests
+  type: pull-request
+  source:
+    repository: Etone/concourse-demo-code
+
 - name: ci
   type: git
   icon: github
@@ -15,11 +26,20 @@ jobs:
     trigger: true
   - set_pipeline: self
     file: ci/pipelines/reconfigure.yaml
-- name: configure-build
+- name: configure-prs
   plan:
-  - get: ci
-    trigger: true
-    passed:
-    - configure-self
-  - set_pipeline: build
-    file: ci/pipelines/build.yaml
+  - in_parallel:
+    - get: ci
+      trigger: true
+      passed:
+      - configure-self
+    - get: pull-requests
+  - load_var: open-prs
+    file: pull-requests/prs.json
+  - across:
+    - var: pr
+      values: ((.:open-prs))
+    set_pipeline: prs
+    file: ci/pipelines/build-credless.yml
+    instance_vars: 
+      number: ((.:pr.number))

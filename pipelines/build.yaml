@@ -48,7 +48,6 @@ resources:
     username: etone
     password: ((git-package-token))
 
-
 jobs:
 - name: build-and-test
   plan:
