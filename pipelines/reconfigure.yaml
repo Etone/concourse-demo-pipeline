@@ -1,16 +1,4 @@
-resource_types:
-- name: git-branches
-  type: registry-image
-  source:
-    repository: aoldershaw/git-branches-resource
-
 resources:
-- name: branches
-  type: git-branches
-  source:
-    uri: git@github.com:concourse/concourse.git
-    branch_regex: snapshot/.*
-
 - name: ci
   type: git
   icon: github
@@ -34,13 +22,9 @@ jobs:
       trigger: true
       passed:
       - configure-self
-    - get: branches
-      trigger: true
-  - load_var: branches
-    file: branches/branches.json
   - across:
     - var: branch
-      values: ((.:branches))
+      values: [language, bye-world]
     set_pipeline: branches
     file: ci/pipelines/build-credless.yml
     instance_vars: 
