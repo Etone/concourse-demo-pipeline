@@ -63,6 +63,7 @@ jobs:
     - build-artifacts
     params:
       image: build-artifacts/jib-image.tar
+      version: v1
 - name: deploy
   plan:
   - in_parallel:  
