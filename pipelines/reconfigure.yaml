@@ -35,6 +35,7 @@ jobs:
       passed:
       - configure-self
     - get: branches
+      trigger: true
   - load_var: branches
     file: branches/branches.json
   - across:
