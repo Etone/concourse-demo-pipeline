@@ -15,7 +15,7 @@ jobs:
     trigger: true
   - set_pipeline: self
     file: ci/pipelines/reconfigure.yaml
-- name: configure-prs
+- name: configure-features
   plan:
   - in_parallel:
     - get: ci
@@ -26,6 +26,6 @@ jobs:
     - var: branch
       values: [language, bye-world]
     set_pipeline: branches
-    file: ci/pipelines/build-credless.yml
+    file: ci/pipelines/build-credless.yaml
     instance_vars: 
       branch: ((.:branch))
