@@ -1,0 +1,10 @@
+platform: linux
+
+inputs:
+- name: container
+
+run:
+  dir: container
+  path: cat
+  args:
+  - "metadata.json"

@@ -21,7 +21,21 @@ resources:
   check_every: 168h
   source:
     repository: maven
+
+- name: busybox
+  icon: docker
+  type: registry-image
+  check_every: 168h
+  source:
+    repository: busybox
     
+- name: app-container
+  icon: docker
+  type: registry-image
+  source:
+    repository: ghcr.io/etone/spring-boot-hello-world
+    username: etone
+    password: ((git-package-token))
 
 
 jobs:
@@ -44,8 +58,26 @@ jobs:
   - task: build-jar-and-container
     file: ci/tasks/build-java-maven.yaml
     image: maven
+  - put: app-container
+    inputs:
+    - build-artifacts
+    params:
+      image: build-artifacts/jib-image.tar
 - name: deploy
   plan:
-  - get: ci
-    passed:
-    - generate-metadata
+  - in_parallel:  
+    - get: ci
+      passed:
+      - generate-metadata
+    - get: app-container
+      passed:
+      - build-and-test
+      params:
+        format: rootfs
+      trigger: true
+    - get: busybox
+  - task: print-info
+    file: ci/tasks/print-container-info.yaml
+    image: busybox
+    input_mapping:
+      container: app-container
