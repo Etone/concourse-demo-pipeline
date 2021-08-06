@@ -1,14 +1,15 @@
 resource_types:
-- name: pull-request
+- name: git-branches
   type: registry-image
   source:
-    repository: aoldershaw/github-pr-resource
+    repository: aoldershaw/git-branches-resource
 
 resources:
-- name: pull-requests
-  type: pull-request
+- name: branches
+  type: git-branches
   source:
-    repository: Etone/concourse-demo-code
+    uri: git@github.com:concourse/concourse.git
+    branch_regex: snapshot/.*
 
 - name: ci
   type: git
@@ -33,13 +34,13 @@ jobs:
       trigger: true
       passed:
       - configure-self
-    - get: pull-requests
-  - load_var: open-prs
-    file: pull-requests/prs.json
+    - get: branches
+  - load_var: branches
+    file: branches/branches.json
   - across:
-    - var: pr
-      values: ((.:open-prs))
-    set_pipeline: prs
+    - var: branch
+      values: ((.:branches))
+    set_pipeline: branches
     file: ci/pipelines/build-credless.yml
     instance_vars: 
-      number: ((.:pr.number))
+      branch: ((.:branch))
